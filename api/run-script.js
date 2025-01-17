@@ -4,14 +4,13 @@ export default function handler(_, res) {
 	exec('bash script.sh', (error, stdout, stderr) => {
 		if (error) {
 			console.error(`Error: ${error.message}`);
-			return res.status(500).json({ error: error.message });
+			return;
 		}
 		if (stderr) {
 			console.error(`stderr: ${stderr}`);
-			return res.status(500).json({ error: stderr });
+			return;
 		}
 		console.log(`stdout: ${stdout}`);
-		res.status(200).json({ message: 'Script executed successfully', output: stdout });
 	});
 }
 
