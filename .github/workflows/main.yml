@@ -15,8 +15,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "sklbz"
-          git config --global user.email "sokol.bozanic.sklbz@gmail.com"
+          git config --global user.name "${ github.actor }"
+          git config --global user.email "${ github.actor_id }${ github.actor }@users.noreply.github.com"
 
       - name: Append Current Time to log.txt
         run: |
