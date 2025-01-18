@@ -1,0 +1,31 @@
+name: Daily Log Update
+
+on:
+  schedule:
+    - cron: '0 7 * * *'  # Runs daily at 07:00 UTC
+  workflow_dispatch:      # Allows manual triggering
+
+jobs:
+  update-log:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "sklbz"
+          git config --global user.email "sokol.bozanic.sklbz@gmail.com"
+
+      - name: Append Current Time to log.txt
+        run: |
+          echo "Updated at $(date -u)" >> log.txt
+
+      - name: Commit Changes
+        run: |
+          git add -A
+          git commit -m "Update log.txt with timestamp [$(date -u '+%Y-%m-%d %H:%M:%S')]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
